@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    description: This is a silly demo
+    language: Go
+    owner: Viktor Farcic (viktor@farcic.com)
+    team: dot
+  labels:
+    app.kubernetes.io/name: silly-demo-mem
+  name: silly-demo-mem
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: silly-demo-mem
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: silly-demo-mem
+      annotations:
+        live.stormforge.io/schedule: '@daily'
+        live.stormforge.io/auto-deploy: "true"
+        live.stormforge.io/cpu.optimization-goal: Balanced
+        live.stormforge.io/memory.optimization-goal: Balanced
+        live.stormforge.io/containers.cpu.requests.min: "10m"
+        live.stormforge.io/containers.cpu.requests.max: "2000m"
+        live.stormforge.io/containers.memory.requests.min: "5Mi"
+        live.stormforge.io/containers.memory.requests.max: "2048Mi"
+        live.stormforge.io/containers.cpu.limits.limit-request-ratio: "1.3"
+        live.stormforge.io/containers.memory.limits.limit-request-ratio: "1.3"
+    spec:
+      containers:
+        - image: c8n.io/vfarcic/silly-demo:1.4.94
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          name: silly-demo-mem
+          env:
+            - name: MEMORY_LEAK_MAX_MEMORY
+              value: "true"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080

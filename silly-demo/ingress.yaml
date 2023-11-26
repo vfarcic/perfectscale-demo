@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    description: This is a silly demo
+    language: Go
+    owner: Viktor Farcic (viktor@farcic.com)
+    team: dot
+  labels:
+    app.kubernetes.io/name: silly-demo
+  name: silly-demo
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: silly-demo.34.73.183.106.nip.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: silly-demo
+                port:
+                  number: 8080
+            path: /
+            pathType: ImplementationSpecific

@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    description: This is a silly demo
+    language: Go
+    owner: Viktor Farcic (viktor@farcic.com)
+    team: dot
+  labels:
+    app.kubernetes.io/name: silly-demo-mem
+  name: silly-demo-mem
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: silly-demo-mem
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: silly-demo-mem
+    spec:
+      containers:
+        - image: c8n.io/vfarcic/silly-demo:1.4.94
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          name: silly-demo-mem
+          env:
+            - name: MEMORY_LEAK_MAX_MEMORY
+              value: "true"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          resources:
+            limits:
+              cpu: 500m
+              memory: 768Mi
+            requests:
+              cpu: 20m
+              memory: 384Mi

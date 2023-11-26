@@ -1,0 +1,6 @@
+stormforge:
+  address: https://api.stormforge.io/
+authorization:
+  issuer: https://api.stormforge.io/
+  clientID: e4376cf3a79d4a05a428f019dfee8dd7 # stormforge-demo
+  clientSecret: eqksWmJ62ZSzRx0__t.hz_1PRA
