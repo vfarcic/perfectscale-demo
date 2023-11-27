@@ -19,17 +19,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: silly-demo-mem
-      annotations:
-        live.stormforge.io/schedule: '@daily'
-        live.stormforge.io/auto-deploy: "true"
-        live.stormforge.io/cpu.optimization-goal: Balanced
-        live.stormforge.io/memory.optimization-goal: Balanced
-        live.stormforge.io/containers.cpu.requests.min: "10m"
-        live.stormforge.io/containers.cpu.requests.max: "2000m"
-        live.stormforge.io/containers.memory.requests.min: "5Mi"
-        live.stormforge.io/containers.memory.requests.max: "2048Mi"
-        live.stormforge.io/containers.cpu.limits.limit-request-ratio: "1.3"
-        live.stormforge.io/containers.memory.limits.limit-request-ratio: "1.3"
+        automation.perfectscale.io/enabled: "true"
     spec:
       containers:
         - image: c8n.io/vfarcic/silly-demo:1.4.94
